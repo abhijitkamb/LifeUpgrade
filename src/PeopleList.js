@@ -2,27 +2,48 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
+var injectTapEventPlugin = require('react-tap-event-plugin');
+
+//Material UI components
+
+var Paper = require('material-ui/lib/paper');
+var Table = require('material-ui/lib/table/table');
+var TableBody = require('material-ui/lib/table/table-body');
+var TableHeader = require('material-ui/lib/table/table-header');
+var TableHeaderColumn = require('material-ui/lib/table/table-header-column');
+var TableRow = require('material-ui/lib/table/table-row');
+var TableRowColumn = require('material-ui/lib/table/table-row-column');
+var AppBar = require('material-ui/lib/app-bar');
+
+injectTapEventPlugin();
 
 var PeopleFilter = require('./PeopleFilter');
 var PeopleAdd = require('./PeopleAdd');
 
 var PeopleRow = React.createClass({
+
+	getStyle: function(width, person) {
+		var style = {height: 24};
+		if (width) style.width = width;
+		//if (bug.priority == 'p1') style.color = 'red';
+		return style;
+	},
+
 	render: function() {
+		var person = this.props.people;
 		return (
-			<tr className="peopleRow">
-				
-				<td>
+			<TableRow>
+				<TableRowColumn style={this.getStyle(100, person)}>
 					<Link to={'/people/' + this.props.people._id}>
 						{this.props.people._id}
 					</Link>
-				</td>
-				<td>{this.props.people.name}</td>
-				<td>{this.props.people.photo}</td>
-				<td>{this.props.people.place}</td>
-				<td>{this.props.people.problem}</td>
-				<td>{this.props.people.solution}</td>
-
-			</tr>
+				</TableRowColumn >
+				<TableRowColumn style={this.getStyle(40, person)}>{person.name}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>{person.photo}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(60, person)}>{person.problem}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(undefined, person)}>{person.solution}</TableRowColumn>
+			</TableRow>
 		);
 	}
 });
@@ -36,21 +57,23 @@ var PeopleTable = React.createClass({
 		});
 
 		return (
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Photo</th>
-						<th>Place</th>
-						<th>Problem</th>
-						<th>Solution</th>
-					</tr>
-				</thead>
-				<tbody>
-					{peoplerows}
-				</tbody>
-			</table>
+			<Paper zDepth={1} style={{marginTop: 10, marginBottom: 10}}>
+				<Table>
+					<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+						<TableRow>
+							<TableHeaderColumn style={{width: 40}}>ID</TableHeaderColumn>
+							<TableHeaderColumn style={{width: 40}}>Name</TableHeaderColumn>
+							<TableHeaderColumn style={{width: 40}}>Photo</TableHeaderColumn>
+							<TableHeaderColumn style={{width: 40}}>Place</TableHeaderColumn>
+							<TableHeaderColumn style={{width: 40}}>Problem</TableHeaderColumn>
+							<TableHeaderColumn style={{width: 40}}>Solution</TableHeaderColumn>
+						</TableRow>
+					</TableHeader>
+					<TableBody stripedRows={true}>
+						{peoplerows}
+					</TableBody>
+				</Table>
+			</Paper>
 			
 		);
 	}
@@ -71,7 +94,7 @@ var PeopleList = React.createClass({
 		console.log("LOCAION QUERY:: ", this.props.location.query);
 		return (
 			<div className="peopleList">
-				<h1>People</h1>
+				<AppBar title="Help these people" showMenuIconButton={false}/>
 				<PeopleFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
 				<hr />
 				<PeopleTable peopledata={this.state.peopledata} />
@@ -83,6 +106,7 @@ var PeopleList = React.createClass({
 	},
 
 	componentDidMount: function() {
+
 		console.log("componentDidMount gets called");
 		this.loadData();
   		//handle errors: https://facebook.github.io/react/docs/tutorial.html#updating-state
