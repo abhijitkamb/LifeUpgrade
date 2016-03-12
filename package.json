@@ -4,6 +4,7 @@
   "description": "Social service app to better poor people's jobs\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dimprove \u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001bto improve poor people's lives",
   "main": "main.js",
   "dependencies": {
+    "amazon-product-api": "^0.3.8",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "body-parser": "^1.14.2",

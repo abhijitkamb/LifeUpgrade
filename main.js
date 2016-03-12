@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
+var amazon = require('amazon-product-api');
 
 var app = express();
 //SET THIS PLEASE BEFORE RUNNING THE SERVER AND NEVER PUSH CREDENTIALS TO GIT
@@ -36,6 +37,9 @@ app.get('/api/people', function(req, res){
 		//console.log(doc);
 		res.json(docs);
 	});
+
+
+
 });
 
 
