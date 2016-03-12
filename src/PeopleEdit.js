@@ -18,7 +18,7 @@ var TextField = require('material-ui/lib/text-field');
 var Snackbar = require('material-ui/lib/snackbar');
 
 
-var PeopleEdit = React.createClass({
+var PeopleEdit = React.createClass({ 
 
 
 	render: function() {

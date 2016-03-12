@@ -56277,9 +56277,41 @@ var Snackbar = require('material-ui/lib/snackbar');
 var PeopleEdit = React.createClass({
 	displayName: 'PeopleEdit',
 
+
 	render: function () {
-		return React.createElement('div', { style: { maxWidth: 800 } }, React.createElement(Card, null, React.createElement(CardHeader, { title: 'Edit Profile', subtitle: this.props.params.id,
-			avatar: React.createElement(Avatar, { backgroudColor: Colors.teal500, icon: React.createElement(FontIcon, { className: 'fa fa-bug' }) }) }), React.createElement(CardText, null, React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Name', value: this.state.name, onChange: this.onChangeName }), React.createElement('br', null), React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Photo', value: this.state.photo, onChange: this.onChangePhoto }), React.createElement('br', null), React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Problem', value: this.state.problem, onChange: this.onChangeProblem }), React.createElement('br', null), React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Solution', value: this.state.solution, onChange: this.onChangeSolution }), React.createElement('br', null), React.createElement(SelectField, { fullWidth: true, floatingLabelText: 'Country', value: this.state.place, onChange: this.onChangePlace }, React.createElement(MenuItem, { value: 'India', primaryText: 'India' }), React.createElement(MenuItem, { value: 'China', primaryText: 'China' }), React.createElement(MenuItem, { value: 'Canada', primaryText: 'Canada' })), React.createElement('br', null), React.createElement(RaisedButton, { label: 'Save', primary: true, onTouchTap: this.submit }), React.createElement(FlatButton, { label: 'Back to people list', linkButton: true, href: '/#/people', style: { verticalAlign: 'top' } }), React.createElement(Snackbar, { open: this.state.successVisible, message: 'Changes saved, thank you.', autoHideDuration: 5000, action: 'ok', onActionTouchTap: this.dismissSuccessMessage, onRequestClose: this.dismissSuccessMessage }))));
+		return React.createElement(
+			'div',
+			{ style: { maxWidth: 800 } },
+			React.createElement(
+				Card,
+				null,
+				React.createElement(CardHeader, { title: 'Edit Profile', subtitle: this.props.params.id,
+					avatar: React.createElement(Avatar, { backgroudColor: Colors.teal500, icon: React.createElement(FontIcon, { className: 'fa fa-bug' }) }) }),
+				React.createElement(
+					CardText,
+					null,
+					React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Name', value: this.state.name, onChange: this.onChangeName }),
+					React.createElement('br', null),
+					React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Photo', value: this.state.photo, onChange: this.onChangePhoto }),
+					React.createElement('br', null),
+					React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Problem', value: this.state.problem, onChange: this.onChangeProblem }),
+					React.createElement('br', null),
+					React.createElement(TextField, { fullWidth: true, floatingLabelText: 'Solution', value: this.state.solution, onChange: this.onChangeSolution }),
+					React.createElement('br', null),
+					React.createElement(
+						SelectField,
+						{ fullWidth: true, floatingLabelText: 'Country', value: this.state.place, onChange: this.onChangePlace },
+						React.createElement(MenuItem, { value: 'India', primaryText: 'India' }),
+						React.createElement(MenuItem, { value: 'China', primaryText: 'China' }),
+						React.createElement(MenuItem, { value: 'Canada', primaryText: 'Canada' })
+					),
+					React.createElement('br', null),
+					React.createElement(RaisedButton, { label: 'Save', primary: true, onTouchTap: this.submit }),
+					React.createElement(FlatButton, { label: 'Back to people list', linkButton: true, href: '/#/people', style: { verticalAlign: 'top' } }),
+					React.createElement(Snackbar, { open: this.state.successVisible, message: 'Changes saved, thank you.', autoHideDuration: 5000, action: 'ok', onActionTouchTap: this.dismissSuccessMessage, onRequestClose: this.dismissSuccessMessage })
+				)
+			)
+		);
 	},
 
 	getInitialState: function () {
@@ -56464,7 +56496,7 @@ var PeopleRow = React.createClass({
 
 	render: function () {
 		var person = this.props.people;
-		return React.createElement(TableRow, null, React.createElement(TableRowColumn, { style: this.getStyle(100, person) }, React.createElement(Link, { to: '/people/' + this.props.people._id }, this.props.people._id)), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.name), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.photo), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.place), React.createElement(TableRowColumn, { style: this.getStyle(60, person) }, person.problem), React.createElement(TableRowColumn, { style: this.getStyle(undefined, person) }, person.solution));
+		return React.createElement(TableRow, null, React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, React.createElement(Link, { to: '/people/' + this.props.people._id }, this.props.people._id)), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.name), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.photo), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.place), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.problem), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.solution));
 	}
 });
 
@@ -56477,7 +56509,10 @@ var PeopleTable = React.createClass({
 			return React.createElement(PeopleRow, { key: people._id, people: people });
 		});
 
-		return React.createElement(Paper, { zDepth: 1, style: { marginTop: 10, marginBottom: 10 } }, React.createElement(Table, null, React.createElement(TableHeader, { displaySelectAll: false, adjustForCheckbox: false }, React.createElement(TableRow, null, React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'ID'), React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'Name'), React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'Photo'), React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'Place'), React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'Problem'), React.createElement(TableHeaderColumn, { style: { width: 40 } }, 'Solution'))), React.createElement(TableBody, { stripedRows: true }, peoplerows)));
+		return(
+			// Change RowColumn
+			React.createElement(Paper, { zDepth: 1, style: { marginTop: 10, marginBottom: 10 } }, React.createElement(Table, null, React.createElement(TableHeader, { displaySelectAll: false, adjustForCheckbox: false }, React.createElement(TableRow, null, React.createElement(TableRowColumn, { style: { width: 40 } }, 'ID'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Name'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Photo'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Place'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Problem'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Solution'))), React.createElement(TableBody, { stripedRows: true }, peoplerows)))
+		);
 	}
 });
 

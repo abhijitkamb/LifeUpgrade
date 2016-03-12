@@ -33,7 +33,7 @@ var PeopleRow = React.createClass({
 		var person = this.props.people;
 		return (
 			<TableRow>
-				<TableRowColumn style={this.getStyle(100, person)}>
+				<TableRowColumn style={this.getStyle(40, person)}>
 					<Link to={'/people/' + this.props.people._id}>
 						{this.props.people._id}
 					</Link>
@@ -41,8 +41,8 @@ var PeopleRow = React.createClass({
 				<TableRowColumn style={this.getStyle(40, person)}>{person.name}</TableRowColumn>
 				<TableRowColumn style={this.getStyle(40, person)}>{person.photo}</TableRowColumn>
 				<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(60, person)}>{person.problem}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(undefined, person)}>{person.solution}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>{person.problem}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>{person.solution}</TableRowColumn>
 			</TableRow>
 		);
 	}
@@ -55,18 +55,19 @@ var PeopleTable = React.createClass({
 		var peoplerows = this.props.peopledata.map(function(people){
 			return (<PeopleRow key={people._id} people={people} />)
 		});
-
+ 
 		return (
+		// Change RowColumn 
 			<Paper zDepth={1} style={{marginTop: 10, marginBottom: 10}}>
 				<Table>
 					<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 						<TableRow>
-							<TableHeaderColumn style={{width: 40}}>ID</TableHeaderColumn>
-							<TableHeaderColumn style={{width: 40}}>Name</TableHeaderColumn>
-							<TableHeaderColumn style={{width: 40}}>Photo</TableHeaderColumn>
-							<TableHeaderColumn style={{width: 40}}>Place</TableHeaderColumn>
-							<TableHeaderColumn style={{width: 40}}>Problem</TableHeaderColumn>
-							<TableHeaderColumn style={{width: 40}}>Solution</TableHeaderColumn>
+							<TableRowColumn style={{width: 40}}>ID</TableRowColumn>
+							<TableRowColumn style={{width: 40}}>Name</TableRowColumn>
+							<TableRowColumn style={{width: 40}}>Photo</TableRowColumn>
+							<TableRowColumn style={{width: 40}}>Place</TableRowColumn>
+							<TableRowColumn style={{width: 40}}>Problem</TableRowColumn>
+							<TableRowColumn style={{width: 40}}>Solution</TableRowColumn>
 						</TableRow>
 					</TableHeader>
 					<TableBody stripedRows={true}>
