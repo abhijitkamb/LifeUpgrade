@@ -5,10 +5,15 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var amazon = require('amazon-product-api');
 
+var config = require('./config');
+
+var url = config.database;
+var awsId = config.awsId;
+var awsSecret = config.awsSecret;
+var awsTag = config.awsTag;
+
+//console.log("Config: ", config);
 var app = express();
-//SET THIS PLEASE BEFORE RUNNING THE SERVER AND NEVER PUSH CREDENTIALS TO GIT
-//var url = 'mongodb://<dbuser>:<dbpassword>@ds059115.mlab.com:59115/lifeexpress';
-var url = 'mongodb://abhi:abhi@ds059115.mlab.com:59115/lifeexpress';
 var db;
 
 //onsole.log("DITNAME: ", __dirname + '\\static');
@@ -19,7 +24,6 @@ app.use('/', express.static(__dirname + '\\static'));
 //app.use('/', express.static(__dirname + '/static'));
 
 app.use(bodyParser.json());
-
 
 /*
 Get a list of filtered records
