@@ -56057,7 +56057,7 @@ module.exports = isObjectLike;
  * var object = { 'user': 'fred' };
  *
  * _.noop(object) === undefined;
- * // => true
+ * // => truef
  */
 function noop() {
   // No operation performed.
@@ -57038,8 +57038,7 @@ var PeopleList = React.createClass({
 			React.createElement('hr', null),
 			React.createElement(PeopleTable, { peopledata: this.state.peopledata }),
 			React.createElement('hr', null),
-			React.createElement(PeopleAdd, { addperson: this.addPerson }),
-			React.createElement('hr', null)
+			React.createElement(PeopleAdd, { addperson: this.addPerson })
 		);
 	},
 
