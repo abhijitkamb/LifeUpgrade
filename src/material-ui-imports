@@ -7,6 +7,8 @@ var SelectField = require('material-ui/lib/select-field');
 var MenuItem = require('material-ui/lib/menus/menu-item');
 var Avatar = require('material-ui/lib/avatar');
 var FontIcon = require('material-ui/lib/font-icon');
+var FloatingActionButton = require('material-ui/lib/float-action-button');
 var Colors = require('material-ui/lib/styles').Colors;
 
+var FlatButton = require('material-ui/lib/flat-button');
 module.exports = MaterialImport
