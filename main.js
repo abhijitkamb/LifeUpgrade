@@ -4,17 +4,24 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var amazon = require('amazon-product-api');
+//var aws = require("aws-lib");
 
 var config = require('./config');
 
 var url = config.database;
-var awsId = config.awsId;
-var awsSecret = config.awsSecret;
-var awsTag = config.awsTag;
+
 
 //console.log("Config: ", config);
 var app = express();
 var db;
+
+var awsclient = amazon.createClient({
+  awsId: config.awsId,
+  awsSecret: config.awsSecret,
+  awsTag: config.awsTag
+});
+
+//var prodAdv = aws.createProdAdvClient(config.awsId, config.awsSecret, config.awsTag);
 
 //onsole.log("DITNAME: ", __dirname + '\\static');
 //FOR WINDOWS, USE 
@@ -41,8 +48,6 @@ app.get('/api/people', function(req, res){
 		//console.log(doc);
 		res.json(docs);
 	});
-
-
 
 });
 
@@ -100,8 +105,50 @@ MongoClient.connect(url, function(err, dbconn) {
   console.log("Connected correctly to mongo server.");
 
   var server = app.listen(3000, function(){
-	  var port = server.address().port;
-	  console.log('Server listening on port', port, '!');
+		var port = server.address().port;
+		console.log('Server listening on port', port, '!');
+
+	  	awsclient.itemSearch({
+			searchIndex: 'All',
+			keywords: 'tshirt',
+			sort: 'price',
+			responseGroup: 'ItemAttributes,Offers,Images'
+		}, function (err, results, response) {
+			if(err){
+				console.log("ERROR: ", err);
+			} else {
+				console.log("RESULTS");
+				console.log(results[0].ItemAttributes);
+				console.log("********");
+				console.log(results.length);
+				
+				for (r in results) {
+					var itemAttr = results[r].ItemAttributes[0];
+					if('Title' in itemAttr)
+						console.log(itemAttr.Title[0]);
+					else
+						console.log("attr not found1");
+
+
+					if('ListPrice' in itemAttr && 'FormattedPrice' in itemAttr.ListPrice[0])
+						console.log(itemAttr.ListPrice[0].FormattedPrice[0]);
+					else
+						console.log("attr not found2");
+
+					console.log("-----");
+					
+					
+				}
+				
+
+				console.log("RESPONSE");
+				console.log(typeof response);
+				// for (r in results) {
+				// 	console.log(r.ItemAttributes);
+				// }
+			}
+		});	
+
   });
  
   //db.close();

@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "amazon-product-api": "^0.3.8",
+    "aws-lib": "^0.3.0",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "body-parser": "^1.14.2",
@@ -23,7 +24,8 @@
     "watchify": "^3.7.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.5.1",
+    "babel-cli": "^6.6.5",
+    "browserify": "^13.0.0",
     "gulp": "^3.9.1"
   },
   "scripts": {
