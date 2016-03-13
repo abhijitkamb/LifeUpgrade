@@ -56571,12 +56571,49 @@ var anyValue = '*';
 var PeopleAdd = React.createClass({
 	displayName: 'PeopleAdd',
 
+
 	getInitialState: function () {
 		return { name: '', photo: '', place: '', problem: '', solution: '', data_uri: null };
 	},
 	render: function () {
-		return React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardHeader, { title: 'Create', subtitle: 'Tell your story', actAsexpander: true, showExpandableButton: true,
-			avatar: React.createElement(Avatar, { backgroundColor: Colors.teal500, icon: React.createElement(FontIcon, { className: 'fa fa-plus' }) }) }), React.createElement(CardText, { expandable: true, style: { paddingTop: 0 } }, React.createElement(TextField, { hintText: 'Name', value: this.state.name, onChange: this.handleChangeName }), React.createElement('br', null), React.createElement('div', null, React.createElement('form', { onSubmit: this.handleSubmit, encType: 'multipart/form-data' }, React.createElement('span', null, React.createElement('p', { style: { color: '#cccccc', fontSize: 17 } }, ' Photo: '), React.createElement('input', { type: 'file', id: 'imageButton', onChange: this.handleFile })))), React.createElement('br', null), React.createElement(TextField, { hintText: 'Place', value: this.state.place, onChange: this.handleChangePlace }), React.createElement('br', null), React.createElement(TextField, { hintText: 'Problem', value: this.state.problem, onChange: this.handleChangeProblem }), React.createElement('br', null), React.createElement(TextField, { hintText: 'Solution', value: this.state.solution, onChange: this.handleChangeSolution }), React.createElement('br', null), React.createElement(RaisedButton, { label: 'Add Person', primary: true, onTouchTap: this.handleSubmit })));
+		return React.createElement(
+			Card,
+			{ initiallyExpanded: true },
+			React.createElement(CardHeader, { title: 'Create', subtitle: 'Tell your story', actAsexpander: true, showExpandableButton: true,
+				avatar: React.createElement(Avatar, { backgroundColor: Colors.teal500, icon: React.createElement(FontIcon, { className: 'fa fa-plus' }) }) }),
+			React.createElement(
+				CardText,
+				{ expandable: true, style: { paddingTop: 0 } },
+				React.createElement(TextField, { hintText: 'Name', value: this.state.name, onChange: this.handleChangeName }),
+				React.createElement('br', null),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit, encType: 'multipart/form-data' },
+						React.createElement(
+							'span',
+							null,
+							React.createElement(
+								'p',
+								{ style: { color: '#cccccc', fontSize: 17 } },
+								' Photo: '
+							),
+							React.createElement('input', { type: 'file', id: 'imageButton', onChange: this.handleFile })
+						)
+					)
+				),
+				React.createElement('br', null),
+				React.createElement(TextField, { hintText: 'Place', value: this.state.place, onChange: this.handleChangePlace }),
+				React.createElement('br', null),
+				React.createElement(TextField, { hintText: 'Problem', value: this.state.problem, onChange: this.handleChangeProblem }),
+				React.createElement('br', null),
+				React.createElement(TextField, { hintText: 'Solution', value: this.state.solution, onChange: this.handleChangeSolution }),
+				React.createElement('br', null),
+				React.createElement(RaisedButton, { label: 'Add Person', primary: true, onTouchTap: this.handleSubmit })
+			)
+		);
 	},
 
 	handleChangeName: function (e) {

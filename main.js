@@ -108,46 +108,46 @@ MongoClient.connect(url, function(err, dbconn) {
 		var port = server.address().port;
 		console.log('Server listening on port', port, '!');
 
-	  	awsclient.itemSearch({
-			searchIndex: 'All',
-			keywords: 'tshirt',
-			sort: 'price',
-			responseGroup: 'ItemAttributes,Offers,Images'
-		}, function (err, results, response) {
-			if(err){
-				console.log("ERROR: ", err);
-			} else {
-				console.log("RESULTS");
-				console.log(results[0].ItemAttributes);
-				console.log("********");
-				console.log(results.length);
+	 //  	awsclient.itemSearch({
+		// 	searchIndex: 'All',
+		// 	keywords: 'tshirt',
+		// 	sort: 'price',
+		// 	responseGroup: 'ItemAttributes,Offers,Images'
+		// }, function (err, results, response) {
+		// 	if(err){
+		// 		console.log("ERROR: ", err);
+		// 	} else {
+		// 		console.log("RESULTS");
+		// 		console.log(results[0].ItemAttributes);
+		// 		console.log("********");
+		// 		console.log(results.length);
 				
-				for (r in results) {
-					var itemAttr = results[r].ItemAttributes[0];
-					if('Title' in itemAttr)
-						console.log(itemAttr.Title[0]);
-					else
-						console.log("attr not found1");
+		// 		for (r in results) {
+		// 			var itemAttr = results[r].ItemAttributes[0];
+		// 			if('Title' in itemAttr)
+		// 				console.log(itemAttr.Title[0]);
+		// 			else
+		// 				console.log("attr not found1");
 
 
-					if('ListPrice' in itemAttr && 'FormattedPrice' in itemAttr.ListPrice[0])
-						console.log(itemAttr.ListPrice[0].FormattedPrice[0]);
-					else
-						console.log("attr not found2");
+		// 			if('ListPrice' in itemAttr && 'FormattedPrice' in itemAttr.ListPrice[0])
+		// 				console.log(itemAttr.ListPrice[0].FormattedPrice[0]);
+		// 			else
+		// 				console.log("attr not found2");
 
-					console.log("-----");
+		// 			console.log("-----");
 					
 					
-				}
+		// 		}
 				
 
-				console.log("RESPONSE");
-				console.log(typeof response);
-				// for (r in results) {
-				// 	console.log(r.ItemAttributes);
-				// }
-			}
-		});	
+		// 		console.log("RESPONSE");
+		// 		console.log(typeof response);
+		// 		// for (r in results) {
+		// 		// 	console.log(r.ItemAttributes);
+		// 		// }
+		// 	}
+		// });	
 
   });
  
