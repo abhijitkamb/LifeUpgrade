@@ -15,8 +15,6 @@ var Colors = require('material-ui/lib/styles').Colors;
 
 var anyValue = '*';
 
-
-
 var PeopleFilter = React.createClass({
 	render: function() {
 		return (
