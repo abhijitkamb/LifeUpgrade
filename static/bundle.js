@@ -56487,6 +56487,7 @@ var PeopleAdd = require('./PeopleAdd');
 var PeopleRow = React.createClass({
 	displayName: 'PeopleRow',
 
+
 	getStyle: function (width, person) {
 		var style = { height: 24 };
 		if (width) style.width = width;
@@ -56496,7 +56497,44 @@ var PeopleRow = React.createClass({
 
 	render: function () {
 		var person = this.props.people;
-		return React.createElement(TableRow, null, React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, React.createElement(Link, { to: '/people/' + this.props.people._id }, this.props.people._id)), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.name), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.photo), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.place), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.problem), React.createElement(TableRowColumn, { style: this.getStyle(40, person) }, person.solution));
+		return React.createElement(
+			TableRow,
+			null,
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				React.createElement(
+					Link,
+					{ to: '/people/' + this.props.people._id },
+					this.props.people._id
+				)
+			),
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				person.name
+			),
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				person.photo
+			),
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				person.place
+			),
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				person.problem
+			),
+			React.createElement(
+				TableRowColumn,
+				{ style: this.getStyle(40, person) },
+				person.solution
+			)
+		);
 	}
 });
 
@@ -56511,13 +56549,64 @@ var PeopleTable = React.createClass({
 
 		return(
 			// Change RowColumn
-			React.createElement(Paper, { zDepth: 1, style: { marginTop: 10, marginBottom: 10 } }, React.createElement(Table, null, React.createElement(TableHeader, { displaySelectAll: false, adjustForCheckbox: false }, React.createElement(TableRow, null, React.createElement(TableRowColumn, { style: { width: 40 } }, 'ID'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Name'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Photo'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Place'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Problem'), React.createElement(TableRowColumn, { style: { width: 40 } }, 'Solution'))), React.createElement(TableBody, { stripedRows: true }, peoplerows)))
+			React.createElement(
+				Paper,
+				{ zDepth: 1, style: { marginTop: 10, marginBottom: 10 } },
+				React.createElement(
+					Table,
+					null,
+					React.createElement(
+						TableHeader,
+						{ displaySelectAll: false, adjustForCheckbox: false },
+						React.createElement(
+							TableRow,
+							null,
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'ID'
+							),
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'Name'
+							),
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'Photo'
+							),
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'Place'
+							),
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'Problem'
+							),
+							React.createElement(
+								TableRowColumn,
+								{ style: { width: 40 } },
+								'Solution'
+							)
+						)
+					),
+					React.createElement(
+						TableBody,
+						{ stripedRows: true },
+						peoplerows
+					)
+				)
+			)
 		);
 	}
 });
 
 var PeopleList = React.createClass({
 	displayName: 'PeopleList',
+
 
 	getInitialState: function () {
 		return { peopledata: [] };
@@ -56530,7 +56619,16 @@ var PeopleList = React.createClass({
 	render: function () {
 
 		console.log("LOCAION QUERY:: ", this.props.location.query);
-		return React.createElement('div', { className: 'peopleList' }, React.createElement(AppBar, { title: 'Help these people', showMenuIconButton: false }), React.createElement(PeopleFilter, { submitHandler: this.changeFilter, initFilter: this.props.location.query }), React.createElement('hr', null), React.createElement(PeopleTable, { peopledata: this.state.peopledata }), React.createElement('hr', null), React.createElement(PeopleAdd, { addperson: this.addPerson }));
+		return React.createElement(
+			'div',
+			{ className: 'peopleList' },
+			React.createElement(AppBar, { title: 'Help these people', showMenuIconButton: false }),
+			React.createElement(PeopleFilter, { submitHandler: this.changeFilter, initFilter: this.props.location.query }),
+			React.createElement('hr', null),
+			React.createElement(PeopleTable, { peopledata: this.state.peopledata }),
+			React.createElement('hr', null),
+			React.createElement(PeopleAdd, { addperson: this.addPerson })
+		);
 	},
 
 	componentDidMount: function () {
