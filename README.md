@@ -33,6 +33,7 @@ node main.js
 
 
 TODO (in the order of priority):
+---------------------------------
 
 - figure out how to do images, videos and put them in mongodb
 
