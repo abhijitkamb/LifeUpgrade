@@ -10,8 +10,6 @@ var config = require('./config');
 
 var url = config.database;
 
-
-//console.log("Config: ", config);
 var app = express();
 var db;
 
