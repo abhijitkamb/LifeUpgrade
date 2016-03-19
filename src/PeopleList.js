@@ -14,17 +14,38 @@ var TableHeaderColumn = require('material-ui/lib/table/table-header-column');
 var TableRow = require('material-ui/lib/table/table-row');
 var TableRowColumn = require('material-ui/lib/table/table-row-column');
 var AppBar = require('material-ui/lib/app-bar');
+var Card = require('material-ui/lib/card/card');
+var CardActions = require('material-ui/lib/card/card-actions');
+var CardHeader = require('material-ui/lib/card/card-header');
+var CardMedia = require('material-ui/lib/card/card-media');
+var CardTitle = require('material-ui/lib/card/card-title');
+var FlatButton = require('material-ui/lib/flat-button');
+var RaisedButton = require('material-ui/lib/raised-button');
+var CardText = require('material-ui/lib/card/card-text');
+var List = require('material-ui/lib/lists/list');
+var ListItem = require('material-ui/lib/lists/list-item');
+var IconButton = require('material-ui/lib/icon-button');
+var NavigationClose = require('material-ui/lib/svg-icons/navigation/close');
+var Menu = require('material-ui/lib/menus/menu');
+var MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert');
+var MenuItem = require('material-ui/lib/menus/menu-item');
+
+
+//React Bootstrap Components
+var Nav = require('react-bootstrap/lib/Nav');
+var Navbar = require('react-bootstrap/lib/Navbar');
+var NavItem = require('react-bootstrap/lib/NavItem');
 
 injectTapEventPlugin();
 
 var PeopleFilter = require('./PeopleFilter');
 var PeopleAdd = require('./PeopleAdd');
-var PeopleUpload = require('./PeopleUpload');
+//var PeopleUpload = require('./PeopleUpload');
 
 var PeopleRow = React.createClass({
 
 	getStyle: function(width, person) {
-		var style = {height: 24};
+		var style = {height: 50};
 		if (width) style.width = width;
 		//if (bug.priority == 'p1') style.color = 'red';
 		return style;
@@ -32,25 +53,66 @@ var PeopleRow = React.createClass({
 
 	render: function() {
 		var person = this.props.people;
-		return (
-			<TableRow>
+		var headertitle = "Buy "+ person.name +" a new pair of shoes";
+		
+
+			
+			/*<TableRow>
 				<TableRowColumn style={this.getStyle(40, person)}>
 					<Link to={'/people/' + this.props.people._id}>
 						{this.props.people._id}
 					</Link>
 				</TableRowColumn >
-				<TableRowColumn style={this.getStyle(40, person)}>{person.name}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.photo}</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>
+					{person.name}
+				</TableRowColumn>
+				<TableRowColumn style={this.getStyle(40, person)}>
+					{person.photo}
+				</TableRowColumn>
 				<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
 				<TableRowColumn style={this.getStyle(40, person)}>{person.problem}</TableRowColumn>
 				<TableRowColumn style={this.getStyle(40, person)}>{person.solution}</TableRowColumn>
-			</TableRow>
+			
+			<li>
+				
+			</li>*/
+		return (	
+			
+			<Card>
+				<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
+			    <CardMedia>
+			      <img src="http://lorempixel.com/600/337/nature/" />
+			    </CardMedia>
+			    <CardTitle title={headertitle} subtitle={person.place} />
+			    <CardText>
+			      <p>
+			      Problem<br />
+			      {person.problem}<br />
+			      Solution<br /> 
+			      {person.solution}<br />
+			      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+			      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+			      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+			      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+			      </p>
+			    </CardText>
+			    <CardActions>
+			      <RaisedButton label="Learn More" primary={true} /> 
+			    </CardActions>
+
+			</Card>	
+
+			
+
 		);
 	}
 });
  
  
 var PeopleTable = React.createClass({
+
+
+
 	render: function() {
 		//console.log("Rendering peopl table, num items:", this.props.peopledata.length);
 		var peoplerows = this.props.peopledata.map(function(people){
@@ -58,27 +120,18 @@ var PeopleTable = React.createClass({
 		});
  
 		return (
-		// Change RowColumn 
+			// Change RowColumn 
 			<Paper zDepth={1} style={{marginTop: 10, marginBottom: 10}}>
-				<Table>
-					<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-						<TableRow>
-							<TableRowColumn style={{width: 40}}>ID</TableRowColumn>
-							<TableRowColumn style={{width: 40}}>Name</TableRowColumn>
-							<TableRowColumn style={{width: 40}}>Photo</TableRowColumn>
-							<TableRowColumn style={{width: 40}}>Place</TableRowColumn>
-							<TableRowColumn style={{width: 40}}>Problem</TableRowColumn>
-							<TableRowColumn style={{width: 40}}>Solution</TableRowColumn>
-						</TableRow>
-					</TableHeader>
-					<TableBody stripedRows={true}>
-						{peoplerows}
-					</TableBody>
-				</Table>
+
+
+				<div>
+					{peoplerows}
+				</div>
 			</Paper>
 			
 		);
-	}
+	},
+
 });
 
 var PeopleList = React.createClass({
@@ -96,7 +149,22 @@ var PeopleList = React.createClass({
 		console.log("LOCAION QUERY:: ", this.props.location.query);
 		return (
 			<div className="peopleList">
-				<AppBar title="Help these people" showMenuIconButton={false}/>
+			    <Navbar inverse>
+				    <Navbar.Header>
+				      <Navbar.Brand>
+				        <a href="#">Lift Us Up</a>
+				      </Navbar.Brand>
+				      <Navbar.Toggle />
+				    </Navbar.Header>
+				    <Nav pullRight>
+				      <NavItem eventKey={1} href="#">About Us</NavItem>
+				      <NavItem eventKey={2} href="#">Log In</NavItem>
+				      <NavItem eventKey={3} href="#">Sign Up</NavItem>
+				      
+				    </Nav>
+				</Navbar>
+
+
 				<PeopleFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
 				<hr />
 				<PeopleTable peopledata={this.state.peopledata} />
