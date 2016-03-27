@@ -35,7 +35,7 @@ var PeopleAdd = React.createClass({
 					<TextField hintText="Name" value={this.state.name} onChange={this.handleChangeName} />
 					<br/><div>
 					
-					<form onSubmit={this.handleSubmit} encType="multipart/form-data">
+					<form method='post' action='/api/upload' onSubmit={this.handleSubmit} encType="multipart/form-data">
 						<span>
 						<p style={{color: '#cccccc' ,fontSize: 17}}> Photo: </p>
   						<input type="file" id="imageButton" onChange={this.handleFile}></input>

@@ -40,7 +40,7 @@ injectTapEventPlugin();
 
 var PeopleFilter = require('./PeopleFilter');
 var PeopleAdd = require('./PeopleAdd');
-//var PeopleUpload = require('./PeopleUpload');
+var PeopleUpload = require('./PeopleUpload');
 
 var PeopleRow = React.createClass({
 
@@ -167,10 +167,7 @@ var PeopleList = React.createClass({
 
 				<PeopleFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
 				<hr />
-				<PeopleTable peopledata={this.state.peopledata} />
-				<hr />
-				<PeopleAdd addperson={this.addPerson}/>
-				<hr />
+				<PeopleUpload  />
 				
 				
 			</div>
