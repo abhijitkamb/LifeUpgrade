@@ -12,6 +12,9 @@ var Avatar = require('material-ui/lib/avatar');
 var FontIcon = require('material-ui/lib/font-icon');
 var Colors = require('material-ui/lib/styles').Colors;
 
+//React Bootstrap Components
+var Button = require('react-bootstrap/lib/Button');
+
 
 var anyValue = '*';
 
@@ -41,6 +44,8 @@ var PeopleFilter = React.createClass({
 					<RaisedButton label="Apply" onTouchTap={this.submit} />
 				</CardText>
 			</Card>
+
+
 		);
 	},
 

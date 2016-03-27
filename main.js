@@ -61,6 +61,8 @@ app.get('/api/people/:id', function(req, res){
 		//console.log(doc);
 		res.json(docs);
 	});
+
+	//Use amazon api
 });
 
 /*

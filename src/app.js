@@ -9,6 +9,8 @@ var hashHistory = require('react-router').hashHistory;
 
 var PeopleList = require('./PeopleList');
 var PeopleEdit = require('./PeopleEdit');
+var PeopleDetail = require('./PeopleDetail');
+
 
 //console.log("app.js loaded");
 var NoMatch = React.createClass({
@@ -26,7 +28,7 @@ ReactDOM.render(
   (
   	<Router history={hashHistory}>
   		<Route path="/people" component={PeopleList} />
-      <Route path="/people/:id" component={PeopleEdit} />
+      <Route path="/people/:id" component={PeopleDetail} />
 
   		<Redirect from="/" to="/people" />
   		<Route path="*" component={NoMatch} />

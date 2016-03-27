@@ -31,10 +31,22 @@ var MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert');
 var MenuItem = require('material-ui/lib/menus/menu-item');
 
 
+
+var Icon = require('react-fontawesome');
+
 //React Bootstrap Components
 var Nav = require('react-bootstrap/lib/Nav');
 var Navbar = require('react-bootstrap/lib/Navbar');
 var NavItem = require('react-bootstrap/lib/NavItem');
+var PageHeader = require('react-bootstrap/lib/PageHeader');
+var Jumbotron = require('react-bootstrap/lib/Jumbotron');
+var Button = require('react-bootstrap/lib/Button');
+var Grid = require('react-bootstrap/lib/Grid');
+var Row = require('react-bootstrap/lib/Row');
+var Col = require('react-bootstrap/lib/Col');
+var Thumbnail = require('react-bootstrap/lib/Thumbnail')
+
+
 
 injectTapEventPlugin();
 
@@ -75,14 +87,15 @@ var PeopleRow = React.createClass({
 			
 			<li>
 				
-			</li>*/
-		return (	
-			
-			<Card>
-				<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
-			    <CardMedia>
+
+				<CardMedia>
 			      <img src="http://lorempixel.com/600/337/nature/" />
 			    </CardMedia>
+			</li>
+
+						<Card>
+				<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
+			    
 			    <CardTitle title={headertitle} subtitle={person.place} />
 			    <CardText>
 			      <p>
@@ -101,6 +114,23 @@ var PeopleRow = React.createClass({
 			    </CardActions>
 
 			</Card>	
+			*/
+		return (	
+			
+
+
+			<Col xs={6} md={4}>
+				<Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
+			        <h3>{headertitle}</h3>
+			        <p>PLorem ipsum dolor sit amet, consectetur adipiscing elit.
+	      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi</p>
+			        <p>
+			          	<Link to={'/people/' + this.props.people._id}>
+			          		<Button bsStyle="primary">Learn More</Button>
+						</Link>
+			        </p>
+		        </Thumbnail>
+			</Col>
 
 			
 
@@ -120,14 +150,11 @@ var PeopleTable = React.createClass({
 		});
  
 		return (
-			// Change RowColumn 
-			<Paper zDepth={1} style={{marginTop: 10, marginBottom: 10}}>
-
-
-				<div>
+			<Grid>
+				<Row>
 					{peoplerows}
-				</div>
-			</Paper>
+				</Row>
+			</Grid>
 			
 		);
 	},
@@ -149,26 +176,76 @@ var PeopleList = React.createClass({
 		console.log("LOCAION QUERY:: ", this.props.location.query);
 		return (
 			<div className="peopleList">
-			    <Navbar inverse>
+			    <Navbar inverse className="navbar-fixed-top">
 				    <Navbar.Header>
-				      <Navbar.Brand>
+				      <Navbar.Brand className="page-scroll">
 				        <a href="#">Lift Us Up</a>
 				      </Navbar.Brand>
 				      <Navbar.Toggle />
 				    </Navbar.Header>
-				    <Nav pullRight>
-				      <NavItem eventKey={1} href="#">About Us</NavItem>
-				      <NavItem eventKey={2} href="#">Log In</NavItem>
-				      <NavItem eventKey={3} href="#">Sign Up</NavItem>
-				      
-				    </Nav>
+				    <Navbar.Collapse>
+				    	<Nav>
+				    		<NavItem eventKey={1} href="#">Discover</NavItem>
+				    		<NavItem eventKey={2} href="#">How it works</NavItem>
+				    	</Nav>
+					    <Nav pullRight>
+					      <NavItem eventKey={1} href="#">About Us</NavItem>
+					      <NavItem eventKey={2} href="#">Sign Up</NavItem>
+					      <NavItem eventKey={3} href="#">Log In</NavItem>
+					      
+					    </Nav>
+					</Navbar.Collapse>
 				</Navbar>
-
+ 				<Jumbotron>
+				    <h1>Donate Any Item Now!</h1>
+				    <p>Give people exactly what they only need from your favorite online store</p>
+				    <p><Button bsStyle="primary" bsSize="large">Learn more</Button></p>
+				</Jumbotron>
 
 				<PeopleFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
 				<hr />
+
 				<PeopleTable peopledata={this.state.peopledata} />
 				<hr />
+
+				<Grid>
+					<Row>
+						<Col lg={3} md={6}>
+							<div>
+								<Icon name="filter" />
+								<h3>Discover</h3>
+								<p> Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.</p>
+							</div>
+						</Col>
+
+						<Col lg={3} md={6}>
+							<div>
+								<Icon name="book" />
+								<h3>Learn</h3>
+								<p> Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.</p>
+							</div>
+						</Col>
+
+						<Col lg={3} md={6}>
+							<div>
+								<Icon name="shopping-cart" />
+								<h3>Donate</h3>
+								<p> Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.</p>
+							</div>
+						</Col>
+
+						<Col lg={3} md={6}>
+							<div>
+								<Icon name="plane" />
+								<h3>Delivered</h3>
+								<p> Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.</p>
+							</div>
+						</Col>
+					</Row>
+				</Grid>
+
+
+
 				<PeopleAdd addperson={this.addPerson}/>
 				<hr />
 				
