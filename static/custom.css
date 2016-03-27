@@ -1,0 +1,5 @@
+body { padding-top: 70px; }
+
+th, td {border: 1px solid silver; padding: 2px;}
+      
+table {border-collapse: collapse};
