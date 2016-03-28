@@ -61174,17 +61174,37 @@ var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
 var Thumbnail = require('react-bootstrap/lib/Thumbnail');
 
+var ItemCol = React.createClass({
+	displayName: 'ItemCol',
+
+	render: function () {
+		return React.createElement(Col, { xs: 6, md: 4 }, React.createElement(Thumbnail, { src: this.props.itemimg, alt: '242x200' }, React.createElement('h3', null, this.props.itemname), React.createElement('p', null, this.props.itemprice), React.createElement('p', null, React.createElement(Button, { bsStyle: 'primary' }, 'Buy Now'))));
+	}
+});
+
 var PeopleDetail = React.createClass({
 	displayName: 'PeopleDetail',
 
 	render: function () {
 
 		var headertitle = "Buy " + this.state.name + " a new pair of shoes";
-		return React.createElement('div', null, React.createElement(Card, null, React.createElement(CardHeader, { title: 'Salvation Army', subtitle: 'March 14, 2016' }), React.createElement(CardMedia, null, React.createElement('img', { src: 'http://lorempixel.com/600/337/nature/' })), React.createElement(CardTitle, { title: headertitle, subtitle: this.state.place }), React.createElement(CardText, null, React.createElement('p', null, 'Problem', React.createElement('br', null), this.state.problem, React.createElement('br', null), 'Solution', React.createElement('br', null), this.state.solution, React.createElement('br', null), 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.')), React.createElement(CardActions, null, React.createElement(Grid, null, React.createElement(Row, null, React.createElement(Col, { xs: 6, md: 4 }, React.createElement(Thumbnail, { src: 'http://lorempixel.com/600/337/nature/', alt: '242x200' }, React.createElement('h3', null, 'Thumbnail label'), React.createElement('p', null, 'Description'), React.createElement('p', null, React.createElement(Button, { bsStyle: 'primary' }, 'Buy Now')))), React.createElement(Col, { xs: 6, md: 4 }, React.createElement(Thumbnail, { src: 'http://lorempixel.com/600/337/nature/', alt: '242x200' }, React.createElement('h3', null, 'Thumbnail label'), React.createElement('p', null, 'Description'), React.createElement('p', null, React.createElement(Button, { bsStyle: 'primary' }, 'Buy Now')))), React.createElement(Col, { xs: 6, md: 4 }, React.createElement(Thumbnail, { src: 'http://lorempixel.com/600/337/nature/', alt: '242x200' }, React.createElement('h3', null, 'Thumbnail label'), React.createElement('p', null, 'Description'), React.createElement('p', null, React.createElement(Button, { bsStyle: 'primary' }, 'Buy Now')))))))));
+		var cols = [];
+		var matches = this.state.person.matches;
+
+		if (this.state.person) {
+			for (var i = 0; i < matches.length; i++) {
+				// pname = matches[i].name;
+				// pimg = matches[i].img;
+				// pprice = matches[i].price;
+				cols.push(React.createElement(ItemCol, { itemname: matches[i].name, itemimg: matches[i].img, itemprice: matches[i].price }));
+			}
+		}
+
+		return React.createElement('div', null, React.createElement(Card, null, React.createElement(CardHeader, { title: 'Salvation Army', subtitle: 'March 14, 2016' }), React.createElement(CardMedia, null, React.createElement('img', { src: 'http://lorempixel.com/600/337/nature/' })), React.createElement(CardTitle, { title: headertitle, subtitle: this.state.place }), React.createElement(CardText, null, React.createElement('p', null, 'Problem', React.createElement('br', null), this.state.problem, React.createElement('br', null), 'Solution', React.createElement('br', null), this.state.solution, React.createElement('br', null), 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.')), React.createElement(CardActions, null, React.createElement(Grid, null, React.createElement(Row, null, cols)))));
 	},
 
 	getInitialState: function () {
-		return { successVisible: false, name: '', photo: '', place: '', problem: '', solution: '', data_uri: null };
+		return { successVisible: false, person: '' };
 	},
 
 	componentDidMount: function () {
@@ -61199,36 +61219,36 @@ var PeopleDetail = React.createClass({
 	},
 
 	loadData: function () {
-		$.ajax('/api/people/' + this.props.params.id).done(function (person) {
-			console.log("loaded data: ", person);
-			this.setState(person);
+		$.ajax('/api/people/' + this.props.params.id).done(function (persondetails) {
+			console.log("loaded data: ", persondetails);
+			this.setState({ person: persondetails });
 		}.bind(this));
-	},
-
-	submit: function (e) {
-		var person = {
-			name: this.state.name,
-			photo: this.state.photo,
-			place: this.state.place,
-			problem: this.state.problem,
-			solution: this.state.solution
-		};
-
-		$.ajax({
-			url: '/api/people/' + this.props.params.id,
-			contentType: 'application/json',
-			type: 'PUT',
-			data: JSON.stringify(person),
-			dataType: 'json',
-			success: function (person) {
-				console.log("submitted succesfully: ", person);
-				this.setState(person);
-				this.showSuccessMessage();
-			}.bind(this)
-		});
 	}
+
 });
 
+// submit: function(e) {
+// 	var person = {
+// 		name: this.state.name,
+// 		photo: this.state.photo,
+// 		place: this.state.place,
+// 		problem: this.state.problem,
+// 		solution: this.state.solution,
+// 	};
+
+// 	$.ajax({
+// 		url: '/api/people/' + this.props.params.id,
+// 		contentType: 'application/json',
+// 		type: 'PUT',
+// 		data: JSON.stringify(person),
+// 		dataType: 'json',
+// 		success: function(person) {
+// 			console.log("submitted succesfully: ", person);
+// 			this.setState(person);
+// 			this.showSuccessMessage();
+// 		}.bind(this),
+// 	});
+// }
 module.exports = PeopleDetail;
 
 },{"jquery":110,"material-ui/lib/avatar":134,"material-ui/lib/card/card":143,"material-ui/lib/card/card-actions":137,"material-ui/lib/card/card-header":139,"material-ui/lib/card/card-media":140,"material-ui/lib/card/card-text":141,"material-ui/lib/card/card-title":142,"material-ui/lib/flat-button":149,"material-ui/lib/font-icon":151,"material-ui/lib/menus/menu-item":156,"material-ui/lib/raised-button":164,"material-ui/lib/select-field":169,"material-ui/lib/snackbar":170,"material-ui/lib/styles":176,"material-ui/lib/text-field":204,"react":425,"react-bootstrap/lib/Button":221,"react-bootstrap/lib/Col":222,"react-bootstrap/lib/Grid":224,"react-bootstrap/lib/Row":235,"react-bootstrap/lib/Thumbnail":237,"react-dom":244}],489:[function(require,module,exports){
@@ -61497,7 +61517,6 @@ var PeopleAdd = require('./PeopleAdd');
 var PeopleRow = React.createClass({
 	displayName: 'PeopleRow',
 
-
 	getStyle: function (width, person) {
 		var style = { height: 50 };
 		if (width) style.width = width;
@@ -61509,86 +61528,12 @@ var PeopleRow = React.createClass({
 		var person = this.props.people;
 		var headertitle = "Buy " + person.name + " a new pair of shoes";
 
-		/*<TableRow>
-  	<TableRowColumn style={this.getStyle(40, person)}>
-  		<Link to={'/people/' + this.props.people._id}>
-  			{this.props.people._id}
-  		</Link>
-  	</TableRowColumn >
-  	<TableRowColumn style={this.getStyle(40, person)}>
-  		{person.name}
-  	</TableRowColumn>
-  	<TableRowColumn style={this.getStyle(40, person)}>
-  		{person.photo}
-  	</TableRowColumn>
-  	<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
-  	<TableRowColumn style={this.getStyle(40, person)}>{person.problem}</TableRowColumn>
-  	<TableRowColumn style={this.getStyle(40, person)}>{person.solution}</TableRowColumn>
-  
-  <li>
-  	
-  			<CardMedia>
-        <img src="http://lorempixel.com/600/337/nature/" />
-      </CardMedia>
-  </li>
-  					<Card>
-  	<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
-      
-      <CardTitle title={headertitle} subtitle={person.place} />
-      <CardText>
-        <p>
-        Problem<br />
-        {person.problem}<br />
-        Solution<br /> 
-        {person.solution}<br />
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </p>
-      </CardText>
-      <CardActions>
-        <RaisedButton label="Learn More" primary={true} /> 
-      </CardActions>
-  		</Card>	
-  */
-		return React.createElement(
-			Col,
-			{ xs: 6, md: 4 },
-			React.createElement(
-				Thumbnail,
-				{ src: 'http://lorempixel.com/600/337/nature/', alt: '242x200' },
-				React.createElement(
-					'h3',
-					null,
-					headertitle
-				),
-				React.createElement(
-					'p',
-					null,
-					'PLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi'
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement(
-						Link,
-						{ to: '/people/' + this.props.people._id },
-						React.createElement(
-							Button,
-							{ bsStyle: 'primary' },
-							'Learn More'
-						)
-					)
-				)
-			)
-		);
+		return React.createElement(Col, { xs: 6, md: 4 }, React.createElement(Thumbnail, { src: 'http://lorempixel.com/600/337/nature/', alt: '242x200' }, React.createElement('h3', null, headertitle), React.createElement('p', null, 'PLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi'), React.createElement('p', null, React.createElement(Link, { to: '/people/' + this.props.people._id }, React.createElement(Button, { bsStyle: 'primary' }, 'Learn More')))));
 	}
 });
 
 var PeopleTable = React.createClass({
 	displayName: 'PeopleTable',
-
 
 	render: function () {
 		//console.log("Rendering peopl table, num items:", this.props.peopledata.length);
@@ -61596,22 +61541,13 @@ var PeopleTable = React.createClass({
 			return React.createElement(PeopleRow, { key: people._id, people: people });
 		});
 
-		return React.createElement(
-			Grid,
-			null,
-			React.createElement(
-				Row,
-				null,
-				peoplerows
-			)
-		);
+		return React.createElement(Grid, null, React.createElement(Row, null, peoplerows));
 	}
 
 });
 
 var PeopleList = React.createClass({
 	displayName: 'PeopleList',
-
 
 	getInitialState: function () {
 		return { peopledata: [] };
@@ -61624,178 +61560,7 @@ var PeopleList = React.createClass({
 	render: function () {
 
 		console.log("LOCAION QUERY:: ", this.props.location.query);
-		return React.createElement(
-			'div',
-			{ className: 'peopleList' },
-			React.createElement(
-				Navbar,
-				{ inverse: true, className: 'navbar-fixed-top' },
-				React.createElement(
-					Navbar.Header,
-					null,
-					React.createElement(
-						Navbar.Brand,
-						{ className: 'page-scroll' },
-						React.createElement(
-							'a',
-							{ href: '#' },
-							'Lift Us Up'
-						)
-					),
-					React.createElement(Navbar.Toggle, null)
-				),
-				React.createElement(
-					Navbar.Collapse,
-					null,
-					React.createElement(
-						Nav,
-						null,
-						React.createElement(
-							NavItem,
-							{ eventKey: 1, href: '#' },
-							'Discover'
-						),
-						React.createElement(
-							NavItem,
-							{ eventKey: 2, href: '#' },
-							'How it works'
-						)
-					),
-					React.createElement(
-						Nav,
-						{ pullRight: true },
-						React.createElement(
-							NavItem,
-							{ eventKey: 1, href: '#' },
-							'About Us'
-						),
-						React.createElement(
-							NavItem,
-							{ eventKey: 2, href: '#' },
-							'Sign Up'
-						),
-						React.createElement(
-							NavItem,
-							{ eventKey: 3, href: '#' },
-							'Log In'
-						)
-					)
-				)
-			),
-			React.createElement(
-				Jumbotron,
-				null,
-				React.createElement(
-					'h1',
-					null,
-					'Donate Any Item Now!'
-				),
-				React.createElement(
-					'p',
-					null,
-					'Give people exactly what they only need from your favorite online store'
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement(
-						Button,
-						{ bsStyle: 'primary', bsSize: 'large' },
-						'Learn more'
-					)
-				)
-			),
-			React.createElement(PeopleFilter, { submitHandler: this.changeFilter, initFilter: this.props.location.query }),
-			React.createElement('hr', null),
-			React.createElement(PeopleTable, { peopledata: this.state.peopledata }),
-			React.createElement('hr', null),
-			React.createElement(
-				Grid,
-				null,
-				React.createElement(
-					Row,
-					null,
-					React.createElement(
-						Col,
-						{ lg: 3, md: 6 },
-						React.createElement(
-							'div',
-							null,
-							React.createElement(Icon, { name: 'filter' }),
-							React.createElement(
-								'h3',
-								null,
-								'Discover'
-							),
-							React.createElement(
-								'p',
-								null,
-								' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'
-							)
-						)
-					),
-					React.createElement(
-						Col,
-						{ lg: 3, md: 6 },
-						React.createElement(
-							'div',
-							null,
-							React.createElement(Icon, { name: 'book' }),
-							React.createElement(
-								'h3',
-								null,
-								'Learn'
-							),
-							React.createElement(
-								'p',
-								null,
-								' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'
-							)
-						)
-					),
-					React.createElement(
-						Col,
-						{ lg: 3, md: 6 },
-						React.createElement(
-							'div',
-							null,
-							React.createElement(Icon, { name: 'shopping-cart' }),
-							React.createElement(
-								'h3',
-								null,
-								'Donate'
-							),
-							React.createElement(
-								'p',
-								null,
-								' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'
-							)
-						)
-					),
-					React.createElement(
-						Col,
-						{ lg: 3, md: 6 },
-						React.createElement(
-							'div',
-							null,
-							React.createElement(Icon, { name: 'plane' }),
-							React.createElement(
-								'h3',
-								null,
-								'Delivered'
-							),
-							React.createElement(
-								'p',
-								null,
-								' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'
-							)
-						)
-					)
-				)
-			),
-			React.createElement(PeopleAdd, { addperson: this.addPerson }),
-			React.createElement('hr', null)
-		);
+		return React.createElement('div', { className: 'peopleList' }, React.createElement(Navbar, { inverse: true, className: 'navbar-fixed-top' }, React.createElement(Navbar.Header, null, React.createElement(Navbar.Brand, { className: 'page-scroll' }, React.createElement('a', { href: '#' }, 'Lift Us Up')), React.createElement(Navbar.Toggle, null)), React.createElement(Navbar.Collapse, null, React.createElement(Nav, null, React.createElement(NavItem, { eventKey: 1, href: '#' }, 'Discover'), React.createElement(NavItem, { eventKey: 2, href: '#' }, 'How it works')), React.createElement(Nav, { pullRight: true }, React.createElement(NavItem, { eventKey: 1, href: '#' }, 'About Us'), React.createElement(NavItem, { eventKey: 2, href: '#' }, 'Sign Up'), React.createElement(NavItem, { eventKey: 3, href: '#' }, 'Log In')))), React.createElement(Jumbotron, null, React.createElement('h1', null, 'Donate Any Item Now!'), React.createElement('p', null, 'Give people exactly what they only need from your favorite online store'), React.createElement('p', null, React.createElement(Button, { bsStyle: 'primary', bsSize: 'large' }, 'Learn more'))), React.createElement(PeopleFilter, { submitHandler: this.changeFilter, initFilter: this.props.location.query }), React.createElement('hr', null), React.createElement(PeopleTable, { peopledata: this.state.peopledata }), React.createElement('hr', null), React.createElement(Grid, null, React.createElement(Row, null, React.createElement(Col, { lg: 3, md: 6 }, React.createElement('div', null, React.createElement(Icon, { name: 'filter' }), React.createElement('h3', null, 'Discover'), React.createElement('p', null, ' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'))), React.createElement(Col, { lg: 3, md: 6 }, React.createElement('div', null, React.createElement(Icon, { name: 'book' }), React.createElement('h3', null, 'Learn'), React.createElement('p', null, ' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'))), React.createElement(Col, { lg: 3, md: 6 }, React.createElement('div', null, React.createElement(Icon, { name: 'shopping-cart' }), React.createElement('h3', null, 'Donate'), React.createElement('p', null, ' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'))), React.createElement(Col, { lg: 3, md: 6 }, React.createElement('div', null, React.createElement(Icon, { name: 'plane' }), React.createElement('h3', null, 'Delivered'), React.createElement('p', null, ' Sample of a section that describes steps of how the app works. Im gonna fill a few more lines here with random words like blah. Thank You. Thats it.'))))), React.createElement(PeopleAdd, { addperson: this.addPerson }), React.createElement('hr', null));
 	},
 
 	componentDidMount: function () {

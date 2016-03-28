@@ -66,58 +66,8 @@ var PeopleRow = React.createClass({
 	render: function() {
 		var person = this.props.people;
 		var headertitle = "Buy "+ person.name +" a new pair of shoes";
-		
 
-			
-			/*<TableRow>
-				<TableRowColumn style={this.getStyle(40, person)}>
-					<Link to={'/people/' + this.props.people._id}>
-						{this.props.people._id}
-					</Link>
-				</TableRowColumn >
-				<TableRowColumn style={this.getStyle(40, person)}>
-					{person.name}
-				</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>
-					{person.photo}
-				</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.problem}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.solution}</TableRowColumn>
-			
-			<li>
-				
-
-				<CardMedia>
-			      <img src="http://lorempixel.com/600/337/nature/" />
-			    </CardMedia>
-			</li>
-
-						<Card>
-				<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
-			    
-			    <CardTitle title={headertitle} subtitle={person.place} />
-			    <CardText>
-			      <p>
-			      Problem<br />
-			      {person.problem}<br />
-			      Solution<br /> 
-			      {person.solution}<br />
-			      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-			      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-			      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-			      </p>
-			    </CardText>
-			    <CardActions>
-			      <RaisedButton label="Learn More" primary={true} /> 
-			    </CardActions>
-
-			</Card>	
-			*/
 		return (	
-			
-
 
 			<Col xs={6} md={4}>
 				<Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
@@ -244,11 +194,8 @@ var PeopleList = React.createClass({
 					</Row>
 				</Grid>
 
-
-
 				<PeopleAdd addperson={this.addPerson}/>
 				<hr />
-				
 				
 			</div>
 		);

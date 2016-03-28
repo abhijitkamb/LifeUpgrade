@@ -55,14 +55,69 @@ Get a single record
 */
 app.get('/api/people/:id', function(req, res){
 
+	var person;
+	var matchdetails = [];
+
 	console.log("GET SINGLE RECORD: ", req.query);
 
 	db.collection("people").findOne({_id: ObjectId(req.params.id)}, function(err, docs){
-		//console.log(doc);
-		res.json(docs);
+		
+		//res.json(docs);
+		person = docs;
+		// console.log('++++++++++++++++');
+		// console.log(person);
+		// console.log('++++++++++++++++');
+
+			//Use amazon api
+		awsclient.itemSearch({
+				//availability: 'Available',
+				keywords: 'shoes',
+				itemPage: '1',
+				responseGroup: 'ItemAttributes, Offers, Images',
+			}, function (err, results) {
+				if(err) {
+					console.log(err);
+				} else {
+					console.log(results.length);
+					//console.log(results);
+
+					//results_parsed = JSON.parse(results);
+
+					//console.log(results_parsed);
+					//i<results.length
+					for (i=0; i < 3; i++) {
+						var itemdetail = {}
+						itemdetail.name = results[i].ItemAttributes[0].Title[0];
+						itemdetail.img = results[i].SmallImage[0].URL[0];
+						itemdetail.price = results[i].OfferSummary[0].LowestNewPrice[0].FormattedPrice[0];
+						
+						// console.log(itemdetail.name);
+						// console.log(itemdetail.img);
+						// console.log(itemdetail.price);
+
+						matchdetails[i] = itemdetail;
+
+						console.log("________________");
+					}
+				}
+
+				person['matches'] = matchdetails;
+
+				// console.log('----------------');
+				// console.log(person);
+				// console.log('----------------');
+
+				res.json(person);
+
+			}
+
+		);
+		
 	});
 
-	//Use amazon api
+	
+
+
 });
 
 /*

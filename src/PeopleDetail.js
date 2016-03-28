@@ -27,12 +27,40 @@ var Col = require('react-bootstrap/lib/Col');
 var Thumbnail = require('react-bootstrap/lib/Thumbnail')
 
 
-var PeopleDetail = React.createClass({ 
+var ItemCol = React.createClass({
 
+	render: function() {
+		return (	
+		    <Col xs={6} md={4}>
+		        <Thumbnail src={this.props.itemimg} alt="242x200">
+			        <h3>{this.props.itemname}</h3>
+			        <p>{this.props.itemprice}</p>
+			        <p>
+			          <Button bsStyle="primary">Buy Now</Button>
+			        </p>
+		        </Thumbnail>
+		    </Col>
+		);
+	}
+});
+
+var PeopleDetail = React.createClass({ 
 
 	render: function() {
 
 		var headertitle = "Buy "+ this.state.name +" a new pair of shoes";
+		var cols = [];
+		var matches = this.state.person.matches;
+
+		if(this.state.person){
+			for (var i=0; i < matches.length; i++) {
+				// pname = matches[i].name;
+				// pimg = matches[i].img;
+				// pprice = matches[i].price;
+	    		cols.push(<ItemCol itemname={matches[i].name} itemimg={matches[i].img} itemprice={matches[i].price}/>);
+	    	}
+    	}
+
 		return (
 			<div>
 				<Card>
@@ -57,33 +85,7 @@ var PeopleDetail = React.createClass({
 				    <CardActions>
 				      	<Grid>
 						    <Row>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
+						    	{cols}
 						    </Row>
 						  </Grid>
 				    </CardActions>
@@ -94,7 +96,7 @@ var PeopleDetail = React.createClass({
 	},
 		
 	getInitialState: function() {
-		return {successVisible: false, name: '', photo: '', place: '', problem: '', solution: '', data_uri: null};
+		return {successVisible: false, person: '' };
 	},
  
 	componentDidMount: function() {
@@ -109,35 +111,35 @@ var PeopleDetail = React.createClass({
 	}, 
 
 	loadData: function() {
-		$.ajax('/api/people/' + this.props.params.id).done(function(person) {
-			console.log("loaded data: ", person);
-			this.setState(person);
+		$.ajax('/api/people/' + this.props.params.id).done(function(persondetails) {
+			console.log("loaded data: ", persondetails);
+			this.setState({person: persondetails});
 		}.bind(this));
 	},
 
 
-	submit: function(e) {
-		var person = { 
-			name: this.state.name,
-			photo: this.state.photo,
-			place: this.state.place,
-			problem: this.state.problem,
-			solution: this.state.solution,
-		};
+	// submit: function(e) {
+	// 	var person = { 
+	// 		name: this.state.name,
+	// 		photo: this.state.photo,
+	// 		place: this.state.place,
+	// 		problem: this.state.problem,
+	// 		solution: this.state.solution,
+	// 	};
 
-		$.ajax({
-			url: '/api/people/' + this.props.params.id,
-			contentType: 'application/json',
-			type: 'PUT',
-			data: JSON.stringify(person),
-			dataType: 'json',
-			success: function(person) { 
-				console.log("submitted succesfully: ", person);
-				this.setState(person);
-				this.showSuccessMessage();
-			}.bind(this),
-		});
-	}
+	// 	$.ajax({
+	// 		url: '/api/people/' + this.props.params.id,
+	// 		contentType: 'application/json',
+	// 		type: 'PUT',
+	// 		data: JSON.stringify(person),
+	// 		dataType: 'json',
+	// 		success: function(person) { 
+	// 			console.log("submitted succesfully: ", person);
+	// 			this.setState(person);
+	// 			this.showSuccessMessage();
+	// 		}.bind(this),
+	// 	});
+	// }
 });
 
 module.exports = PeopleDetail;
