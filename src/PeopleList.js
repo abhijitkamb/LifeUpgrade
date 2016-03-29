@@ -67,36 +67,38 @@ var PeopleRow = React.createClass({
 
 	render: function() {
 		var person = this.props.people;
-		var headertitle = "Buy "+ person.name +" a new pair of shoes";
+		var headertitle = "Buy "+ person.name +" a " + person.solution + "!";
+		console.log(person.name);
 
-		return (	
+		var thumb_style = {
+			background: "#2c3e50",
+			padding: "20px",
+		};
 
+		var text_style = {
+			color: "#ecf0f1"
+		};
+
+		return (
 			<Col xs={6} md={4}>
-				<Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-			        <h3>{headertitle}</h3>
-			        <p>PLorem ipsum dolor sit amet, consectetur adipiscing elit.
-	      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi</p>
+				<Thumbnail style={thumb_style} src={person.name == "Abdul" ? "abdul.png" : "http://lorempixel.com/386/448/nature/"} alt="242x200">
+			        <h3 style={text_style}>{headertitle}</h3>
+			        <p style={text_style}>Help him receive what he needs to improve his life forever.</p>
 			        <p>
 			          	<Link to={'/people/' + this.props.people._id}>
-			          		<Button bsStyle="primary">Learn More</Button>
+			          		<Button bsStyle="success">Learn More</Button>
 						</Link>
 			        </p>
 		        </Thumbnail>
 			</Col>
-
-			
-
 		);
 	}
 });
  
  
 var PeopleTable = React.createClass({
-
-
-
 	render: function() {
-		//console.log("Rendering peopl table, num items:", this.props.peopledata.length);
+		console.log("Rendering people table, num items:", this.props.peopledata.length);
 		var peoplerows = this.props.peopledata.map(function(people){
 			return (<PeopleRow key={people._id} people={people} />)
 		});

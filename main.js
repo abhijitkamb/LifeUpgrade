@@ -71,7 +71,8 @@ app.get('/api/people/:id', function(req, res){
 			//Use amazon api
 		awsclient.itemSearch({
 				//availability: 'Available',
-				keywords: 'folding truck',
+				//keywords: 'folding truck',
+				keywords: person.solution,
 				itemPage: '1',
 				responseGroup: 'ItemAttributes, Offers, Images',
 			}, function (err, results) {
@@ -88,7 +89,7 @@ app.get('/api/people/:id', function(req, res){
 					for (i=0; i < 3; i++) {
 						var itemdetail = {}
 						itemdetail.name = results[i].ItemAttributes[0].Title[0];
-						itemdetail.img = results[i].SmallImage[0].URL[0];
+						itemdetail.img = results[i].MediumImage[0].URL[0];
 						itemdetail.price = results[i].OfferSummary[0].LowestNewPrice[0].FormattedPrice[0];
 						
 						// console.log(itemdetail.name);
@@ -103,9 +104,9 @@ app.get('/api/people/:id', function(req, res){
 
 				person['matches'] = matchdetails;
 
-				// console.log('----------------');
-				// console.log(person);
-				// console.log('----------------');
+				console.log('----------------');
+				console.log(person);
+				console.log('----------------');
 
 				res.json(person);
 
