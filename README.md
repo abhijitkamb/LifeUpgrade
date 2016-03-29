@@ -1,4 +1,4 @@
-# LifeExpress
+# Lift Us Up (LifeUpgrade)
 --------------------------------
 
 Prerequisites:
