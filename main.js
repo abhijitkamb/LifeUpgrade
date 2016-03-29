@@ -71,7 +71,7 @@ app.get('/api/people/:id', function(req, res){
 			//Use amazon api
 		awsclient.itemSearch({
 				//availability: 'Available',
-				keywords: 'shoes',
+				keywords: 'folding truck',
 				itemPage: '1',
 				responseGroup: 'ItemAttributes, Offers, Images',
 			}, function (err, results) {

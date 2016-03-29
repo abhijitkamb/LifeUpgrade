@@ -46,6 +46,8 @@ var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
 var Thumbnail = require('react-bootstrap/lib/Thumbnail')
 
+var ReactCSS = require('reactcss');
+
 
 
 injectTapEventPlugin();
@@ -124,6 +126,16 @@ var PeopleList = React.createClass({
 	render: function() {
 
 		console.log("LOCAION QUERY:: ", this.props.location.query);
+
+		var jumbo_style = {
+			padding: "200px 0px 0px 50px",
+			margin: "0px 0px 0px 0px",
+			height: "700px",
+			textAlign: "center",
+			backgroundImage: 'url(' + 'jumbo2.jpg' + ')',
+			backgroundSize: "100% 100%",
+			color: "#fff"
+		}; 
 		return (
 			<div className="peopleList">
 			    <Navbar inverse className="navbar-fixed-top">
@@ -135,7 +147,7 @@ var PeopleList = React.createClass({
 				    </Navbar.Header>
 				    <Navbar.Collapse>
 				    	<Nav>
-				    		<NavItem eventKey={1} href="#">Discover</NavItem>
+				    		<NavItem eventKey={1} href="#filter">Discover</NavItem>
 				    		<NavItem eventKey={2} href="#">How it works</NavItem>
 				    	</Nav>
 					    <Nav pullRight>
@@ -146,7 +158,7 @@ var PeopleList = React.createClass({
 					    </Nav>
 					</Navbar.Collapse>
 				</Navbar>
- 				<Jumbotron>
+ 				<Jumbotron style={jumbo_style}>
 				    <h1>Donate Any Item Now!</h1>
 				    <p>Give people exactly what they only need from your favorite online store</p>
 				    <p><Button bsStyle="primary" bsSize="large">Learn more</Button></p>
