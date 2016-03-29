@@ -46,6 +46,8 @@ var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
 var Thumbnail = require('react-bootstrap/lib/Thumbnail')
 
+var ReactCSS = require('reactcss');
+
 
 
 injectTapEventPlugin();
@@ -65,86 +67,38 @@ var PeopleRow = React.createClass({
 
 	render: function() {
 		var person = this.props.people;
-		var headertitle = "Buy "+ person.name +" a new pair of shoes";
-		
+		var headertitle = "Buy "+ person.name +" a " + person.solution + "!";
+		console.log(person.name);
 
-			
-			/*<TableRow>
-				<TableRowColumn style={this.getStyle(40, person)}>
-					<Link to={'/people/' + this.props.people._id}>
-						{this.props.people._id}
-					</Link>
-				</TableRowColumn >
-				<TableRowColumn style={this.getStyle(40, person)}>
-					{person.name}
-				</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>
-					{person.photo}
-				</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.place}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.problem}</TableRowColumn>
-				<TableRowColumn style={this.getStyle(40, person)}>{person.solution}</TableRowColumn>
-			
-			<li>
-				
+		var thumb_style = {
+			background: "#2c3e50",
+			padding: "20px",
+		};
 
-				<CardMedia>
-			      <img src="http://lorempixel.com/600/337/nature/" />
-			    </CardMedia>
-			</li>
+		var text_style = {
+			color: "#ecf0f1"
+		};
 
-						<Card>
-				<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
-			    
-			    <CardTitle title={headertitle} subtitle={person.place} />
-			    <CardText>
-			      <p>
-			      Problem<br />
-			      {person.problem}<br />
-			      Solution<br /> 
-			      {person.solution}<br />
-			      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-			      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-			      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-			      </p>
-			    </CardText>
-			    <CardActions>
-			      <RaisedButton label="Learn More" primary={true} /> 
-			    </CardActions>
-
-			</Card>	
-			*/
-		return (	
-			
-
-
+		return (
 			<Col xs={6} md={4}>
-				<Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-			        <h3>{headertitle}</h3>
-			        <p>PLorem ipsum dolor sit amet, consectetur adipiscing elit.
-	      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi</p>
+				<Thumbnail style={thumb_style} src={person.name == "Abdul" ? "abdul.png" : "http://lorempixel.com/386/448/nature/"} alt="242x200">
+			        <h3 style={text_style}>{headertitle}</h3>
+			        <p style={text_style}>Help him receive what he needs to improve his life forever.</p>
 			        <p>
 			          	<Link to={'/people/' + this.props.people._id}>
-			          		<Button bsStyle="primary">Learn More</Button>
+			          		<Button bsStyle="success">Learn More</Button>
 						</Link>
 			        </p>
 		        </Thumbnail>
 			</Col>
-
-			
-
 		);
 	}
 });
  
  
 var PeopleTable = React.createClass({
-
-
-
 	render: function() {
-		//console.log("Rendering peopl table, num items:", this.props.peopledata.length);
+		console.log("Rendering people table, num items:", this.props.peopledata.length);
 		var peoplerows = this.props.peopledata.map(function(people){
 			return (<PeopleRow key={people._id} people={people} />)
 		});
@@ -174,6 +128,16 @@ var PeopleList = React.createClass({
 	render: function() {
 
 		console.log("LOCAION QUERY:: ", this.props.location.query);
+
+		var jumbo_style = {
+			padding: "200px 0px 0px 50px",
+			margin: "0px 0px 0px 0px",
+			height: "700px",
+			textAlign: "center",
+			backgroundImage: 'url(' + 'jumbo2.jpg' + ')',
+			backgroundSize: "100% 100%",
+			color: "#fff"
+		}; 
 		return (
 			<div className="peopleList">
 			    <Navbar inverse className="navbar-fixed-top">
@@ -185,7 +149,7 @@ var PeopleList = React.createClass({
 				    </Navbar.Header>
 				    <Navbar.Collapse>
 				    	<Nav>
-				    		<NavItem eventKey={1} href="#">Discover</NavItem>
+				    		<NavItem eventKey={1} href="#filter">Discover</NavItem>
 				    		<NavItem eventKey={2} href="#">How it works</NavItem>
 				    	</Nav>
 					    <Nav pullRight>
@@ -196,7 +160,7 @@ var PeopleList = React.createClass({
 					    </Nav>
 					</Navbar.Collapse>
 				</Navbar>
- 				<Jumbotron>
+ 				<Jumbotron style={jumbo_style}>
 				    <h1>Donate Any Item Now!</h1>
 				    <p>Give people exactly what they only need from your favorite online store</p>
 				    <p><Button bsStyle="primary" bsSize="large">Learn more</Button></p>
@@ -244,11 +208,8 @@ var PeopleList = React.createClass({
 					</Row>
 				</Grid>
 
-
-
 				<PeopleAdd addperson={this.addPerson}/>
 				<hr />
-				
 				
 			</div>
 		);

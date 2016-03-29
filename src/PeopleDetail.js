@@ -24,22 +24,63 @@ var Button = require('react-bootstrap/lib/Button');
 var Grid = require('react-bootstrap/lib/Grid');
 var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
-var Thumbnail = require('react-bootstrap/lib/Thumbnail')
+var Thumbnail = require('react-bootstrap/lib/Thumbnail');
+var Image = require('react-bootstrap/lib/Image');
 
 
-var PeopleDetail = React.createClass({ 
 
+var ItemCol = React.createClass({
 
 	render: function() {
 
-		var headertitle = "Buy "+ this.state.name +" a new pair of shoes";
+		var thumb_style = {
+			background: "#ecf0f1",
+		};
+
+		var text_style = {
+			color: "#c0392b"
+		};
+		return (	
+		    <Col xs={6} md={4}>
+		        <Thumbnail style={thumb_style} src={this.props.itemimg} alt="300x200">
+			        <h3 style={text_style}>{this.props.itemname}</h3><br/>
+			        <h3 style={text_style}>Price: {this.props.itemprice}</h3>
+			        <p>
+			          <Button bsStyle="primary">Buy Now</Button>
+			        </p>
+		        </Thumbnail>
+		    </Col>
+		);
+	}
+});
+
+var PeopleDetail = React.createClass({ 
+
+	render: function() {
+		//console.log(this.state.person);
+		var headertitle = "Buy "+ this.state.person.name +" a " + this.state.person.solution + "!";
+		var cols = [];
+		var matches = this.state.person.matches;
+
+		if(this.state.person){
+			for (var i=0; i < matches.length; i++) {
+				// pname = matches[i].name;
+				// pimg = matches[i].img;
+				// pprice = matches[i].price;
+	    		cols.push(<ItemCol key={i} itemname={matches[i].name} itemimg={matches[i].img} itemprice={matches[i].price}/>);
+	    	}
+    	}
+
+    	var text_style = {
+			color: "#ecf0f1"
+		};
+
 		return (
 			<div>
+				<Image src="abdul.png" thumbnail />
 				<Card>
-					<CardHeader title="Salvation Army" subtitle="March 14, 2016" />
-					<CardMedia>
-			      		<img src="http://lorempixel.com/600/337/nature/" />
-			    	</CardMedia>
+					<CardHeader title="Posted By Abhijit's Charity" subtitle="March 31, 2016" />
+
 				     
 				    <CardTitle title={headertitle} subtitle={this.state.place} />
 				    <CardText>
@@ -48,53 +89,23 @@ var PeopleDetail = React.createClass({
 				      {this.state.problem}<br />
 				      Solution<br /> 
 				      {this.state.solution}<br />
-				      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-				      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-				      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+				      Help him receive what he needs to improve his life forever.
 				      </p>
 				    </CardText>
-				    <CardActions>
-				      	<Grid>
-						    <Row>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
-						    <Col xs={6} md={4}>
-						      <Thumbnail src="http://lorempixel.com/600/337/nature/" alt="242x200">
-						        <h3>Thumbnail label</h3>
-						        <p>Description</p>
-						        <p>
-						          <Button bsStyle="primary">Buy Now</Button>
-						        </p>
-						      </Thumbnail>
-						    </Col>
-						    </Row>
-						  </Grid>
-				    </CardActions>
 
 				</Card>	
+				<h3>Results from amazon</h3>
+				<Grid>
+				    <Row>
+				    	{cols}
+				    </Row>
+				</Grid>
 			</div>
 		);
 	},
 		
 	getInitialState: function() {
-		return {successVisible: false, name: '', photo: '', place: '', problem: '', solution: '', data_uri: null};
+		return {successVisible: false, person: '' };
 	},
  
 	componentDidMount: function() {
@@ -109,35 +120,35 @@ var PeopleDetail = React.createClass({
 	}, 
 
 	loadData: function() {
-		$.ajax('/api/people/' + this.props.params.id).done(function(person) {
-			console.log("loaded data: ", person);
-			this.setState(person);
+		$.ajax('/api/people/' + this.props.params.id).done(function(persondetails) {
+			console.log("loaded data: ", persondetails);
+			this.setState({person: persondetails});
 		}.bind(this));
 	},
 
 
-	submit: function(e) {
-		var person = { 
-			name: this.state.name,
-			photo: this.state.photo,
-			place: this.state.place,
-			problem: this.state.problem,
-			solution: this.state.solution,
-		};
+	// submit: function(e) {
+	// 	var person = { 
+	// 		name: this.state.name,
+	// 		photo: this.state.photo,
+	// 		place: this.state.place,
+	// 		problem: this.state.problem,
+	// 		solution: this.state.solution,
+	// 	};
 
-		$.ajax({
-			url: '/api/people/' + this.props.params.id,
-			contentType: 'application/json',
-			type: 'PUT',
-			data: JSON.stringify(person),
-			dataType: 'json',
-			success: function(person) { 
-				console.log("submitted succesfully: ", person);
-				this.setState(person);
-				this.showSuccessMessage();
-			}.bind(this),
-		});
-	}
+	// 	$.ajax({
+	// 		url: '/api/people/' + this.props.params.id,
+	// 		contentType: 'application/json',
+	// 		type: 'PUT',
+	// 		data: JSON.stringify(person),
+	// 		dataType: 'json',
+	// 		success: function(person) { 
+	// 			console.log("submitted succesfully: ", person);
+	// 			this.setState(person);
+	// 			this.showSuccessMessage();
+	// 		}.bind(this),
+	// 	});
+	// }
 });
 
 module.exports = PeopleDetail;

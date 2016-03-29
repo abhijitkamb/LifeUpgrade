@@ -22,6 +22,7 @@
     "react-fontawesome": "^0.3.3",
     "react-router": "^2.0.0",
     "react-tap-event-plugin": "^0.2.2",
+    "reactcss": "^0.4.5",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
