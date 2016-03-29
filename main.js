@@ -5,12 +5,11 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var amazon = require('amazon-product-api');
 //var aws = require("aws-lib");
-var router  = express.Router();
-var multer = require('multer');
+
 var config = require('./config');
 
 var url = config.database;
-
+var fs= require('fs');
 var app = express();
 var db;
 
@@ -20,18 +19,8 @@ var awsclient = amazon.createClient({
   awsTag: config.awsTag
 });
 
-//var prodAdv = aws.createProdAdvClient(config.awsId, config.awsSecret, config.awsTag);
 
-//onsole.log("DITNAME: ", __dirname + '\\static');
-//FOR WINDOWS, USE 
-app.use('/', express.static(__dirname + '\\static'));
-
-//FOR LINUX, USE
-//app.use('/', express.static(__dirname + '/static'));
-
-app.use(bodyParser.json());
-
- function decodeBase64Image(dataString) 
+function decodeBase64Image(dataString) 
         {
           var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
           var response = {};
@@ -46,6 +35,17 @@ app.use(bodyParser.json());
 
           return response;
         }
+//var prodAdv = aws.createProdAdvClient(config.awsId, config.awsSecret, config.awsTag);
+
+//onsole.log("DITNAME: ", __dirname + '\\static');
+//FOR WINDOWS, USE 
+app.use('/', express.static(__dirname + '\\static'));
+
+//FOR LINUX, USE
+//app.use('/', express.static(__dirname + '/static'));
+
+app.use(bodyParser.json());
+app.use('/images',express.static(__dirname + '\\images'));
 
 /*
 Get a list of filtered records
@@ -78,6 +78,8 @@ app.get('/api/people/:id', function(req, res){
 		//console.log(doc);
 		res.json(docs);
 	});
+
+	//Use amazon api
 });
 
 /*
@@ -87,10 +89,18 @@ app.post('/api/people/', function(req, res){
 	console.log("Req body:", req.body);
 	var newPerson = req.body;
 
+	var images = decodeBase64Image(newPerson.photo);
+
+
+
 	db.collection("people").insertOne(newPerson, function(err, result){
 		var newId = result.insertedId;
 		db.collection("people").find({_id: newId}).next(function(err, doc){
 			res.json(doc);
+		});
+
+		fs.writeFile(__dirname +'\\images\\'+newId+newPerson.ext, images.data, 'base64', function(err) {
+  			console.log("Error: "+ err);
 		});
 	});
 
@@ -113,72 +123,6 @@ app.put('/api/people/:id', function(req, res){
 
 });
 
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, __dirname + '\\images');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
-/*
-app.post('/api/image', function(req, res) {
-	  uploading(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-})
-*/
-var fs= require('fs')
-
-app.post('/api/upload', function(req, res) {
-	console.log(req.body.name);
-    console.log('req received');
-    var images = decodeBase64Image(req.body.image);
-
-	fs.writeFile(__dirname +'\\images\\'+req.body.name, images.data, 'base64', function(err) {
-  			console.log("Error: "+ err);
-	});
-
-    /*upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });*/
-    res.redirect('/');
-/*  fs.readFile(req.files.image.path, function (err, data) {
-  	var image = req.body;
-    var imageName = req.body.image.path;
-    // If there's an error
-    if(!imageName){
-      console.log("There was an error")
-      res.redirect("/");
-      res.end();
-    } else {
-      var newPath = __dirname + "/images/" + imageName;
-      // write file to uploads/fullsize folder
-      fs.writeFile(newPath, data, function (err) {
-        // let's see it
-        res.redirect("/api/images/" + imageName);
-      });
-    }
-  });*/
-});
-
-app.get('/api/upload', function(req, res) {
-	console.log(JSON.stringify(req.files));
-});
-/*
-app.get('/api/images/:file', function (req, res){
-  file = req.params.file;
-  var img = fs.readFileSync(__dirname + "/images/" + file);
-  res.writeHead(200, {'Content-Type': 'image/jpg' });
-  res.end(img, 'binary');
-});*/
 
 MongoClient.connect(url, function(err, dbconn) {
   assert.equal(null, err);
@@ -234,4 +178,3 @@ MongoClient.connect(url, function(err, dbconn) {
  
   //db.close();
 });
-
